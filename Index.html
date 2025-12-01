@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的技术博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3a1;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* 英雄区域样式 */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3da98a;
+        }
+        
+        /* 博客文章区域样式 */
+        .blog-section {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .blog-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .card-content p {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* GitHub连接区域样式 */
+        .github-section {
+            background-color: var(--light-color);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .github-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .github-card h2 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .github-card p {
+            margin-bottom: 30px;
+            color: var(--gray-color);
+        }
+        
+        .github-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #495057;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .github-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">TechBlog</a>
+                <ul class="nav-links">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">博客</a></li>
+                    <li><a href="#">项目</a></li>
+                    <li><a href="#">关于我</a></li>
+                    <li><a href="#">联系</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>欢迎来到我的技术博客</h1>
+            <p>这里分享编程技巧、开发经验和最新技术动态。探索代码的无限世界，与志同道合的开发者一起成长。</p>
+            <a href="#blog" class="btn">阅读博客</a>
+        </div>
+    </section>
+
+    <!-- 博客文章区域 -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <h2 class="section-title">最新文章</h2>
+            <div class="blog-grid">
+                <!-- 博客文章卡片1 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <i class="fab fa-js-square"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>JavaScript ES2023 新特性解析</h3>
+                        <p>探索最新JavaScript版本中的数组查找方法、Hashbang语法等新功能，提升开发效率。</p>
+                        <div class="card-meta">
+                            <span>2023年10月15日</span>
+                            <span>8分钟阅读</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- 博客文章卡片2 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <i class="fab fa-react"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>React性能优化完全指南</h3>
+                        <p>从组件设计到状态管理，全面解析React应用性能优化的最佳实践和技巧。</p>
+                        <div class="card-meta">
+                            <span>2023年10月10日</span>
+                            <span>12分钟阅读</span>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- 博客文章卡片3 -->
+                <article class="blog-card">
+                    <div class="card-img">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3>构建可扩展的微服务架构</h3>
+                        <p>深入探讨微服务设计模式、服务发现、负载均衡和容错机制，构建稳健的分布式系统。</p>
+                        <div class="card-meta">
+                            <span>2023年10月5日</span>
+                            <span>15分钟阅读</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub连接区域 -->
+    <section class="github-section">
+        <div class="container">
+            <div class="github-card">
+                <h2>我的GitHub动态</h2>
+                <p>关注我的GitHub账号，查看我的开源项目、代码贡献和技术探索。让我们一起构建更好的开发者社区。</p>
+                <a href="https://github.com/yourusername" class="btn" target="_blank">
+                    <i class="fab fa-github"></i> 访问我的GitHub
+                </a>
+                <div class="github-stats">
+                    <div class="stat">
+                        <div class="stat-number">47</div>
+                        <div class="stat-label">仓库</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">128</div>
+                        <div class="stat-label">星标</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">63</div>
+                        <div class="stat-label">关注者</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于博客</h3>
+                    <p>分享编程知识、技术见解和开发经验，致力于帮助开发者成长。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-dev"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><a href="#">所有文章</a></li>
+                        <li><a href="#">项目展示</a></li>
+                        <li><a href="#">关于我</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>技术分类</h3>
+                    <ul>
+                        <li><a href="#">前端开发</a></li>
+                        <li><a href="#">后端架构</a></li>
+                        <li><a href="#">DevOps</a></li>
+                        <li><a href="#">人工智能</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>订阅更新</h3>
+                    <p>订阅我的博客，获取最新文章和项目更新通知。</p>
+                    <form>
+                        <input type="email" placeholder="输入您的邮箱" style="padding:10px; width:100%; margin:10px 0; border-radius:5px; border:none;">
+                        <button type="submit" class="btn" style="width:100%;">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 我的技术博客. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+        
+        // 模拟GitHub数据（实际项目中应从GitHub API获取）
+        // 这里只是演示，实际使用时需要替换为真实的GitHub API调用
+        function updateGitHubStats() {
+            // 在实际项目中，这里应该调用GitHub API获取用户数据
+            // 例如：fetch('https://api.github.com/users/yourusername')
+            // .then(response => response.json())
+            // .then(data => {
+            //     document.querySelector('.stat-number:nth-child(1)').textContent = data.public_repos;
+            //     // 更新其他统计数据...
+            // });
+            
+            // 这里只是模拟更新
+            console.log("GitHub数据更新功能已准备就绪");
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            updateGitHubStats();
+        });
+    </script>
+</body>
+</html>
